@@ -9,6 +9,7 @@ window.lightlib = (function() {
 			this[i] = elements[i];
 		}
 		this.length = elements.length;
+		return this;
 	}
 	
 	//DOM Utilities
