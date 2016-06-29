@@ -11,12 +11,14 @@ window.lightlib = (function() {
 		this.length = elements.length;
 	}
 	
-	//Utilities
+	//DOM Utilities
 	LightLib.prototype.map = function(callback) {
 		var results = [];
+		
 		for(var i = 0; i < this.length; i++) {
 			results.push(callback.call(this, this[i], i));
 		}
+		
 		return results;
 	}
 	LightLib.prototype.forEach = function(callback) {
@@ -26,6 +28,7 @@ window.lightlib = (function() {
 	
 	var lightlib = function(selector) {
 		var elements;
+		
 		if(typeof selector === "string") {
 			elements = document.querySelectorAll(selector);
 		} else if(selector.length) {
@@ -33,7 +36,24 @@ window.lightlib = (function() {
 		} else {
 			elements = [selector];
 		}
+		
 		return new LightLib(elements);
+	}
+	
+	//Other Utilities
+	lightlib.get = function(url, data, callback) {
+		var hasData = typeof data === "string",
+			req = new XMLHttpRequest();
+			
+		req.addEventListener("load", function() {
+			if(hasData) {
+				callback(this.responseText);
+			} else {
+				data(this.responseText);
+			}
+		});
+		req.open("GET", url + (hasData ? "?" + data : ""));
+		req.send();
 	}
 	
 	window.ll = lightlib;
