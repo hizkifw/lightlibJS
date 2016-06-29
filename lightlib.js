@@ -41,19 +41,34 @@ window.lightlib = (function() {
 	}
 	
 	//Other Utilities
-	lightlib.get = function(url, data, callback) {
-		var hasData = typeof data === "string",
-			req = new XMLHttpRequest();
-			
+	lightlib.ajax = function(options) {
+		var req = new XMLHttpRequest();
+		
 		req.addEventListener("load", function() {
-			if(hasData) {
-				callback(this.responseText);
-			} else {
-				data(this.responseText);
-			}
+			options.success(this.responseText);
 		});
-		req.open("GET", url + (hasData ? "?" + data : ""));
-		req.send();
+		req.open(options.method, options.url);
+		return req.send(options.data);
+	}
+	lightlib.get = function(url, data, callback) {
+		var hasData = typeof data === "string";
+		
+		return lightlib.ajax({
+			method: "get",
+			url: url,
+			data: hasData ? data : null,
+			success: hasData ? callback : data
+		});
+	}
+	lightlib.post = function(url, data, callback) {
+		var hasData = typeof data === "string";
+		
+		return lightlib.ajax({
+			method: "post",
+			url: url,
+			data: hasData ? data : null,
+			success: hasData ? callback : data
+		});
 	}
 	
 	window.ll = lightlib;
