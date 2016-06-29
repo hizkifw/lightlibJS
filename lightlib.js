@@ -3,11 +3,7 @@ lightlibJS v0.0.1
 (c) 2016 YayHay
 */
 
-/** @namespace lightlib */
 window.lightlib = (function() {
-	/**
-	 * @constructor
-	 */
 	function LightLib(elements) {
 		for(var i = 0; i < elements.length; i++) {
 			this[i] = elements[i];
@@ -17,11 +13,6 @@ window.lightlib = (function() {
 	}
 	
 	//DOM Utilities
-	/**
-	 * Returns an array containing the elements of the LightLib object after
-	 * being passed to the callback function
-	 * @param {requestCallback} callback - The function accepting the DOM elements.
-	 */
 	LightLib.prototype.map = function(callback) {
 		var results = [];
 		
@@ -31,20 +22,11 @@ window.lightlib = (function() {
 		
 		return results;
 	}
-	
-	/**
-	 * Same as {@link LightLib.map}, but returns the LightLib object instead.
-	 * @param {requestCallback} callback - The function accepting the DOM elements.
-	 */
 	LightLib.prototype.forEach = function(callback) {
 		this.map(callback);
 		return this;
 	}
 	
-	/**
-	 * Gets or sets the innerHTML of the selected DOM element.
-	 * @param {string} contents - The HTML string to be set.
-	 */
 	LightLib.prototype.html = function(contents) {
 		if(typeof contents === "undefined") {
 			return this.map(function(el) {
@@ -68,9 +50,6 @@ window.lightlib = (function() {
 			});
 			return this;
 		}
-	}
-	LightLib.prototype.attr = function(key, val) {
-		
 	}
 	
 	var lightlib = function(selector) {
