@@ -3,10 +3,12 @@ lightlibJS v0.0.1
 (c) 2016 YayHay
 */
 
-/** @namespace lightlib */
+/** @namespace */
 window.lightlib = (function() {
 	/**
-	 * @constructor
+	 * The {@link LightLib} object. Please use the {@link lightlib} global function.
+	 * @constructor LightLib
+	 * @global
 	 */
 	function LightLib(elements) {
 		for(var i = 0; i < elements.length; i++) {
@@ -18,9 +20,11 @@ window.lightlib = (function() {
 	
 	//DOM Utilities
 	/**
-	 * Returns an array containing the elements of the LightLib object after
+	 * Returns an array containing the elements of the {@link LightLib} object after
 	 * being passed to the callback function
+	 * @function LightLib.map
 	 * @param {requestCallback} callback - The function accepting the DOM elements.
+	 * @returns {LightLib} The LightLib object
 	 */
 	LightLib.prototype.map = function(callback) {
 		var results = [];
@@ -33,7 +37,8 @@ window.lightlib = (function() {
 	}
 	
 	/**
-	 * Same as {@link LightLib.map}, but returns the LightLib object instead.
+	 * Same as {@link LightLib.map}, but returns the {@link LightLib} object instead.
+	 * @function LightLib.forEach
 	 * @param {requestCallback} callback - The function accepting the DOM elements.
 	 */
 	LightLib.prototype.forEach = function(callback) {
@@ -43,6 +48,7 @@ window.lightlib = (function() {
 	
 	/**
 	 * Gets or sets the innerHTML of the selected DOM element.
+	 * @function LightLib.html
 	 * @param {string} contents - The HTML string to be set.
 	 */
 	LightLib.prototype.html = function(contents) {
@@ -57,6 +63,12 @@ window.lightlib = (function() {
 			return this;
 		}
 	}
+	
+	/**
+	 * Gets or sets value of an input
+	 * @function LightLib.val
+	 * @param {string} contents - The string value to be set.
+	 */
 	LightLib.prototype.val = function(contents) {
 		if(typeof contents === "undefined") {
 			return this.map(function(el) {
@@ -69,10 +81,24 @@ window.lightlib = (function() {
 			return this;
 		}
 	}
+	
+	/**
+	 * Gets or sets the attribute of a DOM object.
+	 * @function LightLib.html
+	 * @param {string} key - The name of the attribute
+	 * @param {string} val - The value to be set.
+	 */
 	LightLib.prototype.attr = function(key, val) {
 		
 	}
 	
+	/**
+	 * {@link LightLib} initializer
+	 * @function lightlib
+	 * @param {string|requestCallback} selector - If string is provided,
+	 * returns a new {@link LightLib} object. If a function is provided, adds
+	 * it to the window.onload callback.
+	 */
 	var lightlib = function(selector) {
 		if(typeof selector === "function") {
 			window.addEventListener("load", selector, false);
