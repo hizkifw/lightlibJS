@@ -26,18 +26,46 @@ window.lightlib = (function() {
 		return this;
 	}
 	
-	var lightlib = function(selector) {
-		var elements;
-		
-		if(typeof selector === "string") {
-			elements = document.querySelectorAll(selector);
-		} else if(selector.length) {
-			elements = selector;
+	LightLib.prototype.html = function(contents) {
+		if(typeof contents === "undefined") {
+			return this.map(function(el) {
+				return el.innerHTML;
+			})[0];
 		} else {
-			elements = [selector];
+			this.map(function(el) {
+				el.innerHTML = contents;
+			});
+			return this;
 		}
-		
-		return new LightLib(elements);
+	}
+	LightLib.prototype.val = function(contents) {
+		if(typeof contents === "undefined") {
+			return this.map(function(el) {
+				return el.value;
+			})[0];
+		} else {
+			this.map(function(el) {
+				el.value = contents;
+			});
+			return this;
+		}
+	}
+	
+	var lightlib = function(selector) {
+		if(typeof selector === "function") {
+			window.addEventListener("load", selector, false);
+			return this;
+		} else {
+			var elements;
+			if(typeof selector === "string") {
+				elements = document.querySelectorAll(selector);
+			} else if(selector.length) {
+				elements = selector;
+			} else {
+				elements = [selector];
+			}
+			return new LightLib(elements);
+		}
 	}
 	
 	//Other Utilities
