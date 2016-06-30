@@ -89,7 +89,15 @@ window.lightlib = (function() {
 	 * @param {string} val - The value to be set.
 	 */
 	LightLib.prototype.attr = function(key, val) {
-		
+		if(typeof val === "undefined") {
+			return this.map(function(el) {
+				return el.getAttribute(key);
+			})[0];
+		} else {
+			return this.forEach(function(el) {
+				el.setAttribute(key, val);
+			});
+		}
 	}
 	
 	/**
